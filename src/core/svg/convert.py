@@ -1445,8 +1445,7 @@ def convert_svg_to_lottie(file, layer_frames=0, *args, **kwargs):
             lottie.layers[l].shapes = newshapes
             l += 1
 
-        data = (lottie.json(by_alias=True,exclude_none=True))
-        #data = (lottie.json(by_alias=True,exclude_none=True))
+        data = (lottie.model_dump_json(by_alias=True,exclude_none=True))
         jsondata = json.loads(data)
         optdata = pformat(jsondata, formatfloat)
 

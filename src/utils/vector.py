@@ -5,12 +5,9 @@
 
 import operator
 import math
-import pathlib
 
 import json
-import pydantic.json 
-from pydantic import BaseModel, Field , Schema
-from typing import List, Dict
+
 
 
 class NumpyEncoder(json.JSONEncoder):

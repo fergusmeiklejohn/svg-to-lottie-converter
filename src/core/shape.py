@@ -8,7 +8,7 @@ import numpy as np
 import triangle as tr
 
 
-from model import bezier
+from ..model import bezier
 from utils.vector import NVector as Vector
 from utils.vector import NVector #as Vector
 
