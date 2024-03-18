@@ -3,18 +3,13 @@
 from typing import List, Union, Any, Optional
 from dataclasses import  field
 from pydantic import BaseModel, Field , validator
-import inspect
 import copy
-import math
 from functools import reduce
 import numpy as np
-from utils.vector import NVector #as Vector
+
+from ..utils.vector import NVector #as Vector
 from . import easing
 
-#from .shapes import Ellipse
-
-
-#from pydantic.dataclasses import dataclass
 
 
 def Vector(*args):
@@ -28,7 +23,7 @@ def Vector(*args):
 
     l = v[0].tolist()
 
-    ###print ("fucking vec type : ", type(l))
+    ###print ("vec type : ", type(l))
     ###print ("return vec is :", l)
 
     return l

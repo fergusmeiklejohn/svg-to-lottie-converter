@@ -1,21 +1,15 @@
-import contextlib
-import contextlib
+
 import functools
 import math
-import contextlib
 
 import numpy as np
-import triangle as tr
+
+from ..utils.vector import NVector as Vector
 
 
-from ..model import bezier
-from utils.vector import NVector as Vector
-from utils.vector import NVector #as Vector
-
-from model.bezier import BezierPoint
-from model.properties import Value, MultiDimensional,OffsetKeyframe,MDBezier,ShapeProp
-from model.bezier import Bezier
-from model import *
+from ..model.bezier import BezierPoint
+from ..model.properties import Value
+from ..model import *
 
 def lottieVector(*args):
     param =[]

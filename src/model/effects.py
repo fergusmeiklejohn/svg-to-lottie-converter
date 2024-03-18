@@ -217,11 +217,9 @@ class Tritone(BaseEffect):
 #gIndex = Union[dropDown,Slider,Angle,Color,Point,checkBox,noValue,customValue,Layer,Tint,Fill,Stroke,Tritone,proLevels]
 #gGroup = Union[gIndex,Group]
 #gIndex = List[Union[dropDown,Slider,Angle,Color,Point,checkBox,noValue,customValue,Layer,Tint,Fill,Stroke,Tritone,proLevels]]
-#Index = Union[Group,dropDown,Slider,Angle,Color,Point,checkBox,noValue,customValue,Layer,Tint,Fill,Stroke,Tritone,proLevels]
-
-Groups = TypeVar('Group')
-gIndex = Union[Groups,dropDown,Slider,Angle,Color,Point,checkBox,noValue,
-                customValue,Layer,Tint,Fill,Stroke,Tritone,proLevels]
+Group = TypeVar('Group')
+gIndex = Union[Group, dropDown, Slider, Angle, Color, Point, checkBox, noValue,
+               customValue, Layer, Tint, Fill, Stroke, Tritone, proLevels]
 
 class Group(BaseModel):
     type: int = Field(...,alias='ty')

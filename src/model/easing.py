@@ -4,10 +4,7 @@ from typing import List, Union, Any, Optional
 from dataclasses import  field
 from pydantic import BaseModel, Field
 
-from utils.vector import NVector as Vector
-from utils.vector import NVector #as Vector
-
-from model import *
+from ..model import *
 import inspect
 
 
