@@ -1,22 +1,36 @@
 from typing import List, Optional, Union
-from enum import Enum
+
 import numpy as np
-import math,copy
+import math
 
 from pydantic import BaseModel, Field 
-#from pydantic.dataclasses import dataclass
+
+from ..utils.vector import NVector
+
 
 from . import helpers
-from . import shapes
+
 from . import text
 from . import properties
 
-from . import effects
+
 from . import effects as Effects
 
-from .shapes import  AnyShape, Group
+from .shapes import  AnyShape
 
 Value = Union[properties.Value, properties.ValueKeyframed]
+
+def Vector(*args):
+    param =[]
+    for elem in args :
+        param.append (elem)
+    p = np.array(param)
+    v = NVector(p)
+    length = len(p)
+    length = v[0]
+
+
+    return length
 
 class BoundingBox:
     # Refer to https://gitlab.com/mattbas/python-lottie

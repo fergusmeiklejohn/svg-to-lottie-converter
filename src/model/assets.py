@@ -8,7 +8,6 @@ from typing import List, Union
 from pydantic import BaseModel, Field
 
 from . import layers
-from . import shapes
 from . import properties
 
 #AnyLayer = Union[layers.ShapeLayer, layers.SolidLayer, layers.PreCompLayer, layers.ImageLayer, layers.NullLayer, layers.TextLayer]

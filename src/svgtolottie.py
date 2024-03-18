@@ -3,26 +3,22 @@
 # Change to original code : Generating Lottie using pydantic based object model.
 
 import uvicorn
-from fastapi import FastAPI, File, status
-from core.svg import convert_svg_to_lottie
-from core.svg import convert_svg_to_lottie_def
+from fastapi import FastAPI, File, status, UploadFile
+
+from .core.svg import convert_svg_to_lottie, convert_svg_to_lottie_def
+
 import shutil
-import json
 import os
 from pathlib import Path
 from tempfile import NamedTemporaryFile
-from fastapi import UploadFile
 import xml.etree.cElementTree as et
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from fastapi.exceptions import RequestValidationError
 from fastapi.responses import PlainTextResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from fastapi import FastAPI, HTTPException
 
-from enum import Enum
+
 import cairosvg
-import time
 
 app = FastAPI()
 
