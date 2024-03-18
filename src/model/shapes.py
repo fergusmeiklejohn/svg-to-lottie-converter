@@ -2,19 +2,17 @@ from typing import List, Union, Any , Optional, TypeVar
 #from dataclasses import dataclass
 from enum import Enum
 import math
-import json
+
 import copy
 import numpy as np
 
 from pydantic import BaseModel, Field
 from . import properties, helpers
-from .properties import Value as pValue, MultiDimensional,ShapeProp
+from .properties import Value as pValue, MultiDimensional,ShapeProp, pathBezier
 #from .bezier import Bezier
-from core.base import Index
-from utils.vector import NVector 
-from utils.vector import Point,Size
-#from utils.vector import Vector
-#import properties, helpers
+from ..core.base import Index
+from ..utils.vector import NVector 
+
 
 MDProperty = Union[properties.MultiDimensional, properties.MultiDimensionalKeyframed]
 Value = Union[properties.Value, properties.ValueKeyframed]
@@ -165,7 +163,7 @@ class Shape(BaseModel):
 
 class Path(Shape):
     type: str = Field("sh",alias='ty')
-    shape :ShapeProp  = Field(ShapeProp(value=[]),alias="ks")
+    shape: ShapeProp = Field(ShapeProp(value=pathBezier()), alias="ks")
 
     class Config:
         allow_population_by_field_name = True
@@ -475,11 +473,9 @@ class Trim(ShapeElement):
     class Config:
         allow_population_by_field_name = True
 
-Groups = TypeVar('Group')
+GroupType = TypeVar('GroupType')
 
-ShapeElements = Union[Groups, Merge, Fill, GStroke, Shape, Rect, Ellipse , Stroke , Star, Round, GFill , Trim, Repeater, Transform]
-
-
+ShapeElements = Union[GroupType, Merge, Fill, GStroke, Shape, Rect, Ellipse, Stroke, Star, Round, GFill, Trim, Repeater, Transform]
 class Group(ShapeElement): 
     type : str = Field(default='gr', alias='ty', description='Type')  
     matchName: str = Field(None,alias='mn')
