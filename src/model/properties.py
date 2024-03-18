@@ -301,7 +301,7 @@ class pathBezier(BaseModel):
 
 
 class ShapeProp(BaseModel):
-    value: pathBezier  = Field(..., alias='k', description='Property Value')
+    value: Optional[pathBezier]  = Field(..., alias='k', description='Property Value')
     expression: str  = Field(None, alias='x', description='Property Expression. An AE expression that modifies the value.')
     propertyIndex: int = Field(None, alias='ix', description='Property Index. Used for expressions.')
     animated: int = Field(None, alias='a', description='Defines if property is animated')

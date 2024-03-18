@@ -163,7 +163,7 @@ class Shape(BaseModel):
 
 class Path(Shape):
     type: str = Field("sh",alias='ty')
-    shape: ShapeProp = Field(ShapeProp(value=pathBezier()), alias="ks")
+    shape: ShapeProp = Field(..., alias="ks")
 
     class Config:
         allow_population_by_field_name = True
