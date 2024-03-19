@@ -5,14 +5,12 @@ import math
 import numpy as np
 import matplotlib.colors as colors
 
-from utils.vector import NVector #as Vector
-from utils.transform import TransformMatrix
+from ...utils.vector import NVector #as Vector
+from ...utils.transform import TransformMatrix
 from .svgdata import color_table
 
+from ...model import shapes
 
-
-from model import * 
-import model
 
 #__all__ = ['color_mode', 'Color']
 
@@ -144,7 +142,7 @@ class SvgLinearGradient(SvgGradient):
             self.x2.to_value(bbox),
             self.y2.to_value(bbox),
         ))
-        gradient_shape.gradientType = model.shapes.GradientType.Linear
+        gradient_shape.gradientType = shapes.GradientType.Linear
 
         super().to_lottie(gradient_shape, shape, time)
 

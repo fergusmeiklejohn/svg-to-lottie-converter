@@ -1,4 +1,4 @@
-# Origianl parser and related helper functions code from https://gitlab.com/mattbas/python-lottie
+# Original parser and related helper functions code from https://gitlab.com/mattbas/python-lottie
 # SVG parse using https://gitlab.com/mattbas/python-lottie/. 
 # Change to original code : Generating Lottie using pydantic based object model.
 
