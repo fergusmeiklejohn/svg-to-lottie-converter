@@ -8,24 +8,24 @@ import copy
 import collections
 import numbers
 import json
+import numpy as np
 
 from xml.etree import ElementTree
-from model import animation as objects
-from model import *
-import model
 
-from model import animation
+from ...model import animation as objects
+from ...model import shapes, helpers, layers, animation, properties
 
-from utils.vector import NVector  #as Vector
-from utils.transform import TransformMatrix
-from core.shape import Point
+
+from ...utils.vector import NVector, has_font, font  #as Vector
+from ...utils.transform import TransformMatrix
+from ...core.shape import Point, Ellipse
 from .svgdata import css_atrrs
 from .handler import Handler, NameMode
 #from model.bezier import Bezier
-from core.shape import Ellipse
-from model.properties import Value
-import numpy as np
-from .gradients import *
+from ...model.properties import Value
+
+# from .gradients import *
+from .gradients import parse_color, SvgLinearGradient, SvgRadialGradient
 """
 try:
     from ...utils import font
@@ -324,7 +324,7 @@ class Parser(Handler):
                 )
                 opacity = 1
             else:
-                stroke = model.shapes.Stroke()
+                stroke = shapes.Stroke()
                 color = self.parse_color(stroke_color)
                 stroke.color.value = color[:4]
                 opacity = color[3]
@@ -335,18 +335,18 @@ class Parser(Handler):
             stroke.width.value = self._parse_unit(style.get("stroke-width", 1))
             linecap = style.get("stroke-linecap")
             if linecap == "round":
-                stroke.lineCap = model.helpers.LineCap.Round
+                stroke.lineCap = helpers.LineCap.Round
             elif linecap == "butt":
-                stroke.lineCap = model.helpers.LineCap.Butt
+                stroke.lineCap = helpers.LineCap.Butt
             elif linecap == "square":
-                stroke.lineCap = model.helpers.LineCap.Square
+                stroke.lineCap = helpers.LineCap.Square
             linejoin = style.get("stroke-linejoin")
             if linejoin == "round":
-                stroke.lineJoin = model.helpers.LineJoin.Round
+                stroke.lineJoin = helpers.LineJoin.Round
             elif linejoin == "bevel":
-                stroke.lineJoin = model.helpers.LineJoin.Bevel
+                stroke.lineJoin = helpers.LineJoin.Bevel
             elif linejoin in {"miter", "arcs", "miter-clip"}:
-                stroke.lineJoin = model.helpers.LineJoin.Miter
+                stroke.lineJoin = helpers.LineJoin.Miter
             stroke.miterLimit = self._parse_unit(
                 style.get("stroke-miterlimit", 0)
             )
@@ -355,13 +355,13 @@ class Parser(Handler):
         #print (style.get("fill"))
         if fill_color not in nocolor:
             if fill_color.startswith("url"):
-                fill = self.get_color_url(fill_color, model.shapes.GFill, group)
+                fill = self.get_color_url(fill_color, shapes.GFill, group)
                 opacity = 1
             else:
                 color = self.parse_color(fill_color)
                 fcolor = (Vector(*color[:4]))
                 vcolor = list(fcolor)
-                fill = model.shapes.Fill()
+                fill = shapes.Fill()
                 fill.color = Value(value=vcolor)
                 opacity = color[3]
             opacity *= float(style.get("fill-opacity", 1))
@@ -382,7 +382,7 @@ class Parser(Handler):
             base_element = self.document.find(".//*[@id='%s']" % id)
             use_style = self.parse_style(element, parent_style)
 
-            used = model.shapes.Group()
+            used = shapes.Group()
             #baseclone = copy.deepcopy(base)
             #used.add_shape(baseclone)
             shape_parent.add_shape(used)
@@ -412,7 +412,7 @@ class Parser(Handler):
         return group
 
     def _parseshape_ellipse(self, element, shape_parent, parent_style):
-        ellipse = model.shapes.Ellipse()
+        ellipse = shapes.Ellipse()
         ellipse.position.value = Vector(
             self._parse_unit(element.attrib["cx"]),
             self._parse_unit(element.attrib["cy"])
@@ -434,7 +434,7 @@ class Parser(Handler):
         self._apply_animations(ellipse.size, "size", animations)
 
     def _parseshape_circle(self, element, shape_parent, parent_style):
-        ellipse = model.shapes.Ellipse()
+        ellipse = shapes.Ellipse()
         ellipse.position.value = Vector(
             self._parse_unit(element.attrib["cx"]),
             self._parse_unit(element.attrib["cy"])
@@ -452,7 +452,7 @@ class Parser(Handler):
         )
 
     def _parseshape_rect(self, element, shape_parent, parent_style):
-        rect = model.shapes.Rect()
+        rect = shapes.Rect()
         w = self._parse_unit(element.attrib.get("width", 0))
         h = self._parse_unit(element.attrib.get("height", 0))
 
@@ -492,7 +492,7 @@ class Parser(Handler):
         self._apply_animations(rect.rounded, "rounded", animations)
 
     def _parseshape_line(self, element, shape_parent, parent_style):
-        line = model.shapes.Path()
+        line = shapes.Path()
         line.shape.value.add_point(
             Vector(
                 self._parse_unit(element.attrib["x1"]),
@@ -518,7 +518,7 @@ class Parser(Handler):
 
 
     def _handle_poly(self, element):
-        line = model.shapes.Path()
+        line = shapes.Path()
         coords = list(
             map(float, element.attrib["points"].replace(",", " ").split())
         )
@@ -540,7 +540,7 @@ class Parser(Handler):
         d_parser.parse()
         paths = []
         for path in d_parser.paths:
-            p = model.shapes.Path()
+            p = shapes.Path()
 
             for x in range(len(path.inPoint)):
                 if isinstance(path.inPoint[x], NVector):
@@ -941,7 +941,7 @@ class PathDParser:
     )
 
     def __init__(self, d_string):
-        self.path = model.properties.pathBezier()
+        self.path = properties.pathBezier()
         self.paths = []
         self.p = Vector(0, 0)
         #print ("p in class PathDParser => ",self.p)
@@ -992,7 +992,7 @@ class PathDParser:
                 getattr(self, parser)()
 
     def _push_path(self):
-        self.path = model.properties.pathBezier()
+        self.path = properties.pathBezier()
         self.add_p = True
 
     def _parse_M(self):
@@ -1376,11 +1376,11 @@ def convert_svg_to_lottie_def(file, layer_frames=0, *args, **kwargs):
 
         for x in range(shapeslen):
             if (len(an.layers[0].shapes[x].shapes)) > 1 :
-                layer = model.layers.ShapeLayer()
+                layer = layers.ShapeLayer()
                 lottie.add_layer(layer)
                 layer.endFrame = 60    
                 layer.transform = trans
-                g = layer.add_shape(model.layers.Group())
+                g = layer.add_shape(layers.Group())
                 anshape = an.layers[0].shapes[x]
                 layer.shapes[0] = anshape
                 if anshape.name is None:
@@ -1426,7 +1426,7 @@ def convert_svg_to_lottie(file, layer_frames=0, *args, **kwargs):
             for shape in layers.shapes:
                 getshapes(shape)
                         
-            layer = model.layers.ShapeLayer()
+            layer = layers.ShapeLayer()
             lottie.add_layer(layer)
             #lottie.layers[l].transform = {"ty":"tr"} #layers.transform
             lottie.layers[l].transform = layers.transform
