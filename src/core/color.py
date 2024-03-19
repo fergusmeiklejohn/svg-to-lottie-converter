@@ -2,7 +2,6 @@ import colorsys
 import math
 
 import utils.math.utils as mathutils
-#from utils.math.utils import lerp
 #from utils.math.utils import mathutils.constrain
 from utils.constants import colour_codes
 
@@ -161,7 +160,7 @@ def parse_color(*args, color_mode='RGB', normed=False, **kwargs):
     else:
         raise ValueError("Failed to parse color.")
 
-    if not (hsb is None):
+    if hsb is not None:
         h, s, b = hsb
         if not normed:
             h = mathutils.constrain(h / color_range[0], 0, 1)
@@ -169,7 +168,7 @@ def parse_color(*args, color_mode='RGB', normed=False, **kwargs):
             b = mathutils.constrain(b / color_range[2], 0, 1)
         red, green, blue = colorsys.hsv_to_rgb(h, s, b)
 
-    if not (rgb is None):
+    if rgb is not None:
         r, g, b = rgb
         if not normed:
             red = mathutils.constrain(r / color_range[0], 0, 1)
@@ -240,7 +239,7 @@ class Color:
         :rtype: Color
 
         """
-        lerped = (lerp(s, t, amount) for s, t in zip(self.rgba, target.rgba))
+        lerped = (mathutils.lerp(s, t, amount) for s, t in zip(self.rgba, target.rgba))
         return Color(*lerped, color_mode='RGB')
 
     def __repr__(self):
