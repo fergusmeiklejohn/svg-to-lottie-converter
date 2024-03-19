@@ -7,7 +7,7 @@ import matplotlib.colors as colors
 
 from utils.vector import NVector #as Vector
 from utils.transform import TransformMatrix
-from .svgdata import color_table, css_atrrs
+from .svgdata import color_table
 
 
 

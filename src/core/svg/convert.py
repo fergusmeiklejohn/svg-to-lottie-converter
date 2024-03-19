@@ -8,8 +8,6 @@ import copy
 import collections
 import numbers
 import json
-import random
-from enum import Enum
 
 from xml.etree import ElementTree
 from model import animation as objects
@@ -20,12 +18,12 @@ from model import animation
 
 from utils.vector import NVector  #as Vector
 from utils.transform import TransformMatrix
-from core.shape import Point, Size
-from .svgdata import color_table, css_atrrs
+from core.shape import Point
+from .svgdata import css_atrrs
 from .handler import Handler, NameMode
 #from model.bezier import Bezier
 from core.shape import Ellipse
-from model.properties import Value, MultiDimensional, OffsetKeyframe, MDBezier, ShapeProp
+from model.properties import Value
 import numpy as np
 from .gradients import *
 """

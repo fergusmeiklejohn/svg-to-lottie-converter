@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Union, Optional, List
+from typing import Union, Optional
 #from dataclasses import dataclass
 from enum import Enum
 

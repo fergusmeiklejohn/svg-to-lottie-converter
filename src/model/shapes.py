@@ -1,8 +1,7 @@
-from typing import List, Union, Any , Optional, TypeVar
+from typing import List, Union, Optional, TypeVar
 #from dataclasses import dataclass
 from enum import Enum
 import math
-import json
 import copy
 import numpy as np
 
@@ -12,7 +11,6 @@ from .properties import Value as pValue, MultiDimensional,ShapeProp
 #from .bezier import Bezier
 from core.base import Index
 from utils.vector import NVector 
-from utils.vector import Point,Size
 #from utils.vector import Vector
 #import properties, helpers
 

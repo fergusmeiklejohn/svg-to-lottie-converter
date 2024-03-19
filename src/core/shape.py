@@ -1,20 +1,19 @@
-import contextlib
-import contextlib
+
 import functools
 import math
-import contextlib
+
 
 import numpy as np
-import triangle as tr
 
 
-from ..model import bezier
+
+
 from utils.vector import NVector as Vector
 from utils.vector import NVector #as Vector
 
 from model.bezier import BezierPoint
-from model.properties import Value, MultiDimensional,OffsetKeyframe,MDBezier,ShapeProp
-from model.bezier import Bezier
+from model.properties import Value
+
 from model import *
 
 def lottieVector(*args):
@@ -102,8 +101,8 @@ class PShape:
 
         # The triangulation used to render the shapes.
         self._tri = None
-        self._tri_required = not ('point' in self.attribs) and \
-                             not ('path' in self.attribs)
+        self._tri_required = 'point' not in self.attribs and \
+                             'path' not in self.attribs
         self._tri_vertices = None
         self._tri_edges = None
         self._tri_faces = None

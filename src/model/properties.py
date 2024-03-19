@@ -1,11 +1,8 @@
 # Refer to https://gitlab.com/mattbas/python-lottie
 
-from typing import List, Union, Any, Optional
-from dataclasses import  field
+from typing import List, Union, Optional
 from pydantic import BaseModel, Field , validator
-import inspect
 import copy
-import math
 from functools import reduce
 import numpy as np
 from utils.vector import NVector #as Vector

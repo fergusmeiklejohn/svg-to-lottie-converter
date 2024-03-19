@@ -6,7 +6,6 @@ import colorsys
 import math
 from enum import Enum, auto
 
-from .constants import colour_codes
 from .vector import Vector, Color
 
 def from_uint8(r,g,b):

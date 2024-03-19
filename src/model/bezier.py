@@ -1,23 +1,17 @@
 # Refer to https://gitlab.com/mattbas/python-lottie
 
 import math
-from functools import wraps
 #import numpy as np 
 import copy
 
-from model import animation
 from model import *
-from utils.vector import NVector, Point
+from utils.vector import NVector
 
-from typing import List, Union, Any , Optional, TypeVar
+from typing import List, Union
 #from dataclasses import dataclass
-from enum import Enum
 
 from pydantic import BaseModel, Field
-from . import properties, helpers
-from .properties import Value as pValue, MultiDimensional
 
-import math
 import numpy as np
 
 Number = Union[float, int]

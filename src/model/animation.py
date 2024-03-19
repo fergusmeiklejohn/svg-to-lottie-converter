@@ -1,11 +1,11 @@
-from typing import List, Union, Any
-from enum import Enum
+from typing import List, Union
+
 from pydantic import BaseModel, Field
 #from pydantic.dataclasses import dataclass
 
 from . import layers
 from . import assets 
-from . assets import Meta, Chars
+from . assets import Meta
 from core.base import Index
 from .properties import *
 

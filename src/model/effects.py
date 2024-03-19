@@ -1,9 +1,9 @@
 from __future__ import annotations
-from typing import List, Union ,Any, Optional,Type,TypeVar
+from typing import List, Union , Optional, TypeVar
 from enum import Enum
 
 from pydantic import BaseModel, Field
-from . import properties, helpers
+from . import properties
 #from . helpereffect import Group
 # this is gonna suck
 Value = Union[int,properties.Value, properties.ValueKeyframed]
