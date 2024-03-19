@@ -1,9 +1,7 @@
 import colorsys
 import math
-
-import utils.math.utils as mathutils
-#from utils.math.utils import mathutils.constrain
-from utils.constants import colour_codes
+from ..utils.math import utils as mathutils
+from ..utils.constants import colour_codes
 
 __all__ = ['color_mode', 'Color']
 
