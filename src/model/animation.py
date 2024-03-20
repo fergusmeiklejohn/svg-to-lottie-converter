@@ -6,8 +6,9 @@ from pydantic import BaseModel, Field
 from . import layers
 from . import assets 
 from . assets import Meta
-from core.base import Index
-from .properties import *
+
+from ..core.base import Index
+
 
 #AnyLayer = Union[layers.NullLayer, layers.ImageLayer, layers.ShapeLayer, layers.SolidLayer, layers.PreCompLayer, layers.TextLayer]
 AnyLayer = Union[layers.ShapeLayer, layers.SolidLayer, layers.PreCompLayer, layers.ImageLayer, layers.NullLayer, layers.TextLayer]

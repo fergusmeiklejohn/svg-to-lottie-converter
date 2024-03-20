@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from utils import color
-from core import base
+from core import base, primitives
 
 @contextmanager
 def push_style():
