@@ -4,8 +4,9 @@
 
 import uvicorn
 from fastapi import FastAPI, File, status
-from core.svg import convert_svg_to_lottie
-from core.svg import convert_svg_to_lottie_def
+
+from .core.svg import convert_svg_to_lottie
+from .core.svg import convert_svg_to_lottie_def
 import shutil
 import os
 from pathlib import Path
