@@ -9,8 +9,9 @@ from pydantic import BaseModel, Field
 from . import properties, helpers
 from .properties import Value as pValue, MultiDimensional,ShapeProp
 #from .bezier import Bezier
-from core.base import Index
-from utils.vector import NVector 
+from ..core.base import Index
+from ..utils.vector import NVector
+
 #from utils.vector import Vector
 #import properties, helpers
 

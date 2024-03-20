@@ -5,7 +5,8 @@ from pydantic import BaseModel, Field , validator
 import copy
 from functools import reduce
 import numpy as np
-from utils.vector import NVector #as Vector
+
+from ..utils.vector import NVector #as Vector
 from . import easing
 
 #from .shapes import Ellipse

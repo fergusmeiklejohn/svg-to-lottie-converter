@@ -219,8 +219,8 @@ class Tritone(BaseEffect):
 #gIndex = List[Union[dropDown,Slider,Angle,Color,Point,checkBox,noValue,customValue,Layer,Tint,Fill,Stroke,Tritone,proLevels]]
 #Index = Union[Group,dropDown,Slider,Angle,Color,Point,checkBox,noValue,customValue,Layer,Tint,Fill,Stroke,Tritone,proLevels]
 
-Groups = TypeVar('Group')
-gIndex = Union[Groups,dropDown,Slider,Angle,Color,Point,checkBox,noValue,
+Group = TypeVar('Group')
+gIndex = Union[Group,dropDown,Slider,Angle,Color,Point,checkBox,noValue,
                 customValue,Layer,Tint,Fill,Stroke,Tritone,proLevels]
 
 class Group(BaseModel):
@@ -235,7 +235,7 @@ class Group(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
-Group.update_forward_refs()
+Group.model_rebuild()
 
 Index = Union[Group,dropDown,Slider,Angle,Color,Point,checkBox,noValue,customValue,
               Layer,Tint,Fill,Stroke,Tritone,proLevels]
@@ -253,5 +253,5 @@ class Effect(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
-Effect.update_forward_refs()
+Effect.model_rebuild()
 

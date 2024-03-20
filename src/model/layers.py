@@ -2,7 +2,9 @@ from typing import List, Optional, Union
 import numpy as np
 import math
 
-from pydantic import BaseModel, Field 
+from pydantic import BaseModel, Field
+
+from src.utils.vector import NVector 
 #from pydantic.dataclasses import dataclass
 
 from . import helpers
@@ -11,7 +13,7 @@ from . import properties
 
 from . import effects as Effects
 
-from .shapes import  AnyShape
+from .shapes import  AnyShape, Vector
 
 Value = Union[properties.Value, properties.ValueKeyframed]
 

@@ -4,7 +4,6 @@ import math
 #import numpy as np 
 import copy
 
-from model import *
 from utils.vector import NVector
 
 from typing import List, Union
@@ -190,17 +189,17 @@ class Bezier(BaseModel):
 
         try:
             v = pos.value
-        except:
+        except Exception:
             v = pos
         
         try:
             i = inp.value 
-        except:
+        except Exception:
             i = inp
 
         try:
             o = outp.value 
-        except:
+        except Exception:
             o = outp
 
         self.vertices.insert(index, v)

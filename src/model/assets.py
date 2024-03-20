@@ -10,6 +10,7 @@ from pydantic import BaseModel, Field
 from . import layers
 from . import properties
 
+
 #AnyLayer = Union[layers.ShapeLayer, layers.SolidLayer, layers.PreCompLayer, layers.ImageLayer, layers.NullLayer, layers.TextLayer]
 AnyLayer = Union[layers.PreCompLayer, layers.NullLayer, layers.ImageLayer,
                  layers.ShapeLayer, layers.SolidLayer, layers.TextLayer]

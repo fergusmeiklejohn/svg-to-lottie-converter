@@ -3,8 +3,6 @@
 from pydantic import BaseModel, Field
 
 
-from model import *
-
 
 ## \ingroup Lottie
 class KeyframeBezierHandle(BaseModel):
