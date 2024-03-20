@@ -8,13 +8,13 @@ import numpy as np
 
 
 
-from utils.vector import NVector as Vector
-from utils.vector import NVector #as Vector
+from ..utils.vector import NVector as Vector
+from ..utils.vector import NVector #as Vector
 
-from model.bezier import BezierPoint
-from model.properties import Value
+from ..model.bezier import BezierPoint
+from ..model.properties import Value
+from ..model import shapes, animation, layers
 
-from model import *
 
 def lottieVector(*args):
     param =[]
