@@ -27,15 +27,14 @@ def traverse(o, tree_types=(list, tuple)):
         yield o
 
 def normalizelist(val):
-    if not isinstance(val, (int, float)):
-        if val is not None:
-            val = val.tolist()
-            num = (list(traverse(val)))
-            return num[0]
-        else:
-            return 0
-    else:
+    if isinstance(val, (int, float)):
         return val
+    elif val is not None:
+        val = val.tolist()
+        num = list(traverse(val))
+        return num[0]
+    else:
+        return 0
 
 def Vector(*args):
     param =[]
@@ -180,10 +179,7 @@ class Path(Shape):
         bb = BoundingBox()
         # Assuming vertices is a list of LottieBezier objects and we need their actual points        
         for v in pos.vertices:
-            # Assuming LottieBezier objects have a method or property to get their points
-            # This part might need adjustment based on the actual structure of LottieBezier
-            bb.include(*v.get_points())             # Assuming LottieBezier objects have a method or property to get their points
-            # This part might need adjustment based on the actual structure of LottieBezier
+            bb.include(*v.get_points())
 
         return bb
 
