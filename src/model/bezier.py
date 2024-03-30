@@ -4,7 +4,7 @@ import math
 #import numpy as np 
 import copy
 
-from utils.vector import NVector
+from ..utils.vector import NVector
 
 from typing import List, Union
 #from dataclasses import dataclass
@@ -21,13 +21,13 @@ def Vector(*args):
         param.append (elem)
     p = np.array(param)
     v = NVector(p)
-    l = len(p)
-    list1 = v[0].tolist()
+    length = len(p)
+    # list1 = v[0].tolist()
 
-    l = v[0].tolist()
+    length = v[0].tolist()
 
 
-    return l
+    return length
 
 class vBezier(BaseModel):
     x: Number = Field(None)  # X axis

@@ -16,7 +16,7 @@ from ...model import animation as objects
 from ...model import shapes, helpers, layers, animation, properties
 
 
-from ...utils.vector import NVector, has_font, font  #as Vector
+from ...utils.vector import NVector
 from ...utils.transform import TransformMatrix
 from ...core.shape import Point, Ellipse
 from .svgdata import css_atrrs
@@ -34,6 +34,12 @@ except ImportError:
     has_font = False
 """
 
+try:
+    from ...utils.vector import font
+    has_font = True
+except ImportError:
+    has_font = False
+
 
 def Vector(*args):
     param = []
@@ -41,15 +47,15 @@ def Vector(*args):
         param.append(elem)
     p = np.array(param)
     v = NVector(p)
-    l = len(p)
-    list1 = v[0].tolist()
+    length = len(p)
+    # list1 = v[0].tolist()
 
-    l = v[0].tolist()
+    length = v[0].tolist()
 
     ##print ("fucking vec type : ", type(l))
     ##print ("return vec is :", l)
 
-    return l
+    return length
 
 def formatfloat(x):
     #print (type(x),x)
