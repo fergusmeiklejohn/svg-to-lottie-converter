@@ -14,22 +14,21 @@ from . import easing
 
 #from pydantic.dataclasses import dataclass
 
-
 def Vector(*args):
     param =[]
     for elem in args :
         param.append (elem)
     p = np.array(param)
     v = NVector(p)
-    l = len(p)
-    list1 = v[0].tolist()
+    length = len(p)
+    # list1 = v[0].tolist()
 
-    l = v[0].tolist()
+    length = v[0]#.tolist()
 
-    ###print ("fucking vec type : ", type(l))
-    ###print ("return vec is :", l)
+    ##print ("fucking vec type : ", type(l))
 
-    return l
+    return length
+
 
 Number = Union[float, int]
 
@@ -112,13 +111,13 @@ class Value(BaseModel):
         return self.value
 
     def new_get_value(self, time=0):
-        if not self.animated == None:
+        if not self.animated is not None:
             return self.value
 
         #if not self.keyframes:
         #    return None
 
-        #v = self._get_value_helper(time)[0]
+        v = self._get_value_helper(time)[0]
 
         if self.animated == 1 and self.keyframes:
             return v[0]
@@ -240,17 +239,20 @@ class pathBezier(BaseModel):
 
         try:
             v = pos.value
-        except:
+        except Exception as e:
+            print(e)
             v = pos
         
         try:
             i = inp.value 
-        except:
+        except Exception as e:
+            print(e)
             i = inp
 
         try:
             o = outp.value 
-        except:
+        except Exception as e:
+            print(e)
             o = outp
 
         self.vertices.insert(index, v)
@@ -385,23 +387,25 @@ class GradientColors(BaseModel):
     @validator('colors')
     def set_the_colors(cls,v):
         if v:
-            self.set_colors(colors)
+            instance = cls()  # Create an instance if necessary, or pass an existing instance
+            instance.set_colors(v)
         return v
 
     #def set_colors(self, colors, keyframe=None):
     def set_colors(self, colors, keyframe=None, alpha=None):
 
         #flat = self._flatten_colors(colors)
-        flat = self._flatten_colors(colors, alpha)
+        # flat = self._flatten_colors(colors, alpha)
         if self.colors.animated and keyframe is not None:
             if keyframe > 1:
                 #self.colors.keyframes[keyframe-1].end = flat
-                self._add_to_flattened(offset, color, self.colors.keyframes[keyframe-1].end.components)
+                self._add_to_flattened(
+                   self.offset, self.color, self.colors.keyframes[keyframe-1].end.components)
             #self.colors.keyframes[keyframe].start = flat
-            self._add_to_flattened(offset, color, self.colors.keyframes[keyframe].start.components)
+            self._add_to_flattened(self.offset, self.color, self.colors.keyframes[keyframe].start.components)
         else:
             #self.colors.clear_animation(flat)
-            self._add_to_flattened(offset, color, self.colors.value.components)
+            self._add_to_flattened(self.offset, self.color, self.colors.value.components)
         self.count = len(colors)
 
     #def _flatten_colors(self, colors):
@@ -465,9 +469,9 @@ class GradientColors(BaseModel):
             if keyframe is None:
                 for kf in self.colors.keyframes:
                     if kf.start:
-                        kf.start += flat
+                        kf.start += self.flat
                     if kf.end:
-                        kf.end += flat
+                        kf.end += self.flat
             else:
                 if keyframe > 1:
                     #self.colors.keyframes[keyframe-1].end += flat
