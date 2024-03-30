@@ -7,7 +7,7 @@ import numpy as np
 
 from pydantic import BaseModel, Field
 from . import properties, helpers
-from .properties import Value as pValue, MultiDimensional,ShapeProp
+from .properties import Value as pValue, MultiDimensional,ShapeProp, pathBezier
 #from .bezier import Bezier
 from ..core.base import Index
 from ..utils.vector import NVector
@@ -27,9 +27,9 @@ def traverse(o, tree_types=(list, tuple)):
         yield o
 
 def normalizelist(val):
-    if not ((type(val) == int) or (type(val) == float)):
-        if not (val == None):
-            val = (val.tolist())
+    if not isinstance(val, (int, float)):
+        if val is not None:
+            val = val.tolist()
             num = (list(traverse(val)))
             return num[0]
         else:
@@ -43,14 +43,14 @@ def Vector(*args):
         param.append (elem)
     p = np.array(param)
     v = NVector(p)
-    l = len(p)
-    list1 = v[0].tolist()
+    length = len(p)
+    # list1 = v[0].tolist()
 
-    l = v[0]#.tolist()
+    length = v[0]#.tolist()
 
     ##print ("fucking vec type : ", type(l))
 
-    return l
+    return length
 
 class BoundingBox:
     """!
@@ -163,8 +163,8 @@ class Shape(BaseModel):
 
 
 class Path(Shape):
-    type: str = Field("sh",alias='ty')
-    shape :ShapeProp  = Field(ShapeProp(value=[]),alias="ks")
+    type: str = Field("sh", alias='ty')
+    shape: ShapeProp = Field(default_factory=lambda: ShapeProp(value=pathBezier()), alias="ks")
 
     class Config:
         allow_population_by_field_name = True
@@ -173,11 +173,17 @@ class Path(Shape):
         """!
         Bounding box of the shape element at the given time
         """
-        pos = self.shape.value
+        # Assuming we want to calculate the bounding box based on the current time
+        # and that pathBezier or ShapeProp has a method to get the current state/value based on time
+        pos = self.shape.get_value(time)
 
         bb = BoundingBox()
+        # Assuming vertices is a list of LottieBezier objects and we need their actual points        
         for v in pos.vertices:
-            bb.include(*v)
+            # Assuming LottieBezier objects have a method or property to get their points
+            # This part might need adjustment based on the actual structure of LottieBezier
+            bb.include(*v.get_points())             # Assuming LottieBezier objects have a method or property to get their points
+            # This part might need adjustment based on the actual structure of LottieBezier
 
         return bb
 
@@ -474,9 +480,9 @@ class Trim(ShapeElement):
     class Config:
         allow_population_by_field_name = True
 
-Groups = TypeVar('Group')
+Group = TypeVar('Group')
 
-ShapeElements = Union[Groups, Merge, Fill, GStroke, Shape, Rect, Ellipse , Stroke , Star, Round, GFill , Trim, Repeater, Transform]
+ShapeElements = Union[Group, Merge, Fill, GStroke, Shape, Rect, Ellipse , Stroke , Star, Round, GFill , Trim, Repeater, Transform]
 
 
 class Group(ShapeElement): 
