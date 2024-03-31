@@ -189,17 +189,20 @@ class Bezier(BaseModel):
 
         try:
             v = pos.value
-        except Exception:
+        except Exception as e:
+            print(e)
             v = pos
         
         try:
             i = inp.value 
-        except Exception:
+        except Exception as e:
+            print(e)
             i = inp
 
         try:
             o = outp.value 
-        except Exception:
+        except Exception as e:
+            print(e)
             o = outp
 
         self.vertices.insert(index, v)

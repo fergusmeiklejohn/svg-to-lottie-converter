@@ -152,7 +152,8 @@ class ParseColor:
         try:
             u1 = 4*x / (x + 15*y + 3*z)
             v1 = 9*y / (x + 15*y + 3*z)
-        except ZeroDivisionError:
+        except ZeroDivisionError as e:
+            print(e)
             return 0, 0, 0
 
         y_r = y/yr

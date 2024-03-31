@@ -37,7 +37,8 @@ except ImportError:
 try:
     from ...utils.vector import font
     has_font = True
-except ImportError:
+except ImportError as e:
+    print ("font error : ", e)
     has_font = False
 
 
@@ -118,6 +119,7 @@ class DefsParent:
 
 
 class Parser(Handler):
+    print(Handler)
     def __init__(self, name_mode=NameMode.Inkscape):
         self.init_etree()
         self.name_mode = name_mode
@@ -305,6 +307,7 @@ class Parser(Handler):
         #layer = objects.layers.ShapeLayer()
         #animation.add_layer(layer)
 
+        print("this line is reached")
         group = objects.layers.Group()
         grouptransform = group.transform
         self.apply_common_style(style, grouptransform)
@@ -464,12 +467,14 @@ class Parser(Handler):
 
         try:
             x = self._parse_unit(element.attrib.get("x", 0)) + w / 2
-        except:
+        except Exception as e:
+            print(e)
             x = 0 + w / 2
 
         try:
             y = self._parse_unit(element.attrib.get("y", 0)) + h / 2
-        except:
+        except Exception as e:
+            print(e)
             y = 0 + h / 2
 
         rect.position.value = Vector(x, y)
@@ -1030,7 +1035,8 @@ class PathDParser:
             p = self.p.value
             self.p = None
             self.p = p
-        except:
+        except Exception as e:
+            print(e)
             self.p = self.p
 
         if rel is not None:
@@ -1364,14 +1370,17 @@ def parse_svg_etree(etree, layer_frames=0, *args, **kwargs):
     return parser.parse_etree(etree, layer_frames, *args, **kwargs)
 
 
-def convert_svg_to_lottie_def(file, layer_frames=0, *args, **kwargs):
+def convert_svg_to_lottie_def(file, layer_frames=0, *args, **kwargs):  
+    print("convert_svg_to_lottie_def","file:", file, "layer_frames:", layer_frames, "args:", args, "kwargs:", kwargs)    
     try:
         anim = parse_svg_etree(
             ElementTree.parse(file), layer_frames, *args, **kwargs
         )
+        print(anim)
         
         an = anim
         lottie = animation.Animation()
+        print(lottie)
         lottie.width = int(an.width)
         lottie.height = int(an.height)
         lottie.endFrame = 1
@@ -1386,7 +1395,7 @@ def convert_svg_to_lottie_def(file, layer_frames=0, *args, **kwargs):
                 lottie.add_layer(layer)
                 layer.endFrame = 60    
                 layer.transform = trans
-                g = layer.add_shape(layers.Group())
+                g = layer.add_shape(shapes.Group())
                 anshape = an.layers[0].shapes[x]
                 layer.shapes[0] = anshape
                 if anshape.name is None:
@@ -1398,8 +1407,9 @@ def convert_svg_to_lottie_def(file, layer_frames=0, *args, **kwargs):
         jsondata = json.loads(data)
         optdata = pformat(jsondata, formatfloat)
         return (optdata)
-    except:
-        return {"error!"}
+    except Exception as e:
+        print("Exception thrown at convert.py 1406", e)
+        return {e}
 
 
 def convert_svg_to_lottie(file, layer_frames=0, *args, **kwargs):
@@ -1455,8 +1465,9 @@ def convert_svg_to_lottie(file, layer_frames=0, *args, **kwargs):
 
         return (optdata)
 
-    except:
-        return {"error!"}
+    except Exception as e:
+        print("Exception thrown at convert.py 1464")
+        return {e}
 
 def base_convert_svg_to_lottie(file, layer_frames=0, *args, **kwargs):
     #try:
